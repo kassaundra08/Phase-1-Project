@@ -1,0 +1,4 @@
+{
+    "/locations/:id": "/locations/:id?_embed=comments"
+  }
+  

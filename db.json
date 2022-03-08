@@ -1,0 +1,71 @@
+{
+    "locations": [
+      {
+        "id": 1,
+        "name": "Taj Mahal",
+        "city": "Agra, India",
+        "img": "https://imgur.com/gallery/vkSbm",
+        "rating": 9
+      },
+      {
+        "id": 2,
+        "name": "Colosseum",
+        "city": "Rome, Italy",
+        "img": "https://imgur.com/gallery/Rpfclej",
+        "rating": 10
+      },
+      {
+        "id": 3,
+        "name": "Chichen Itza",
+        "city": "Yucatan, Mexico",
+        "img": "https://imgur.com/gallery/43oEH",
+        "rating": 9
+      },
+      {
+        "id": 4,
+        "name": "Machu Picchu",
+        "city": "Machu Picchu, Peru",
+        "img": "https://imgur.com/gallery/SVAkR",
+        "rating": 10
+      },
+      {
+        "id": 5,
+        "name": "Great Pyramid of Giza",
+        "city": "Giza, Egypt",
+        "img": "https://imgur.com/gallery/ypmt5pX",
+        "rating": 9
+      },
+      {
+        "id": 6,
+        "name": "Petra",
+        "city": "Ma'an, Jordan",
+        "img": "https://imgur.com/gallery/hJeo6L2",
+        "rating": 10
+      },
+      {
+        "id": 7,
+        "name": "Great Wall of China",
+        "city": "China",
+        "img": "https://imgur.com/gallery/9xYbyPs",
+        "rating": 10
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "locationId": 1,
+        "content": "The Taj Mahal is breathtaking!"
+      },
+      {
+        "id": 2,
+        "locationId": 1,
+        "content": "This is a must-see wonder of the world!"
+
+      },
+      {
+        "id": 3,
+        "locationId": 2,
+        "content": "The Roman Colosseum is a staple of Ancient History!"
+      }
+    ]
+  }
