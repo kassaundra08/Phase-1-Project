@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(17, 75, 40);
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-shadow: 2px 2px 8px black;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:fit-content;
+    border-style:solid;
+    border-color:darkolivegreen;
+    border-width: 5px;
+    text-align: center;
+    box-shadow: 2px 2px 2px black;
+}
+
+
