@@ -61,12 +61,6 @@
       "locationId": 2,
       "rating": 9,
       "content": "The Roman Colosseum is a staple of Ancient History!"
-    },
-    {
-      "locationId": 1,
-      "rating": 7,
-      "content": "test",
-      "id": 4
     }
   ]
 }
