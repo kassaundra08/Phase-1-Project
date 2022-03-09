@@ -10,16 +10,19 @@ function renderImages(locations) {
     locations.forEach(location => {
         
         const imageContainer = document.createElement('div');
-        imageContainer.id = `location-${location.id}`;
+        imageContainer.className = `location-container`;
         const locationImage = document.createElement('img');
         locationImage.id = 'image-container-image'
         locationImage.src = location.img;
-        const imageLocation = document.createElement('h2');
+        const imageName = document.createElement('h2');
+        imageName.textContent = location.name;
+        const imageLocation = document.createElement('h4');
         imageLocation.textContent = location.city;
-        const locationRating = document.createElement('h3');
+        const locationRating = document.createElement('h5');
+        locationRating.className = 'location-rating';
         locationRating.id = `rating-${location.id}`;
         loadAvgRating(location, locationRating);
-        imageContainer.append(locationImage, imageLocation, locationRating);
+        imageContainer.append(locationImage, imageName, imageLocation, locationRating);
         mainContainer.append(imageContainer);
 
         imageContainer.addEventListener('click', function(e){
@@ -29,6 +32,7 @@ function renderImages(locations) {
                     removeFromContainer.removeChild(removeFromContainer.firstChild);
                 }
             }
+            window.scrollTo(top);
             const topContainer = document.createElement('div');
             topContainer.id = 'top-container';
             const leftTopContainer = document.createElement('div');
@@ -38,14 +42,16 @@ function renderImages(locations) {
             const topImage = document.createElement('img');
             topImage.id = 'top-container-image';
             topImage.src = location.img;
-            const topLocation = document.createElement('h2');
+            const topLocationName = document.createElement('h2')
+            topLocationName.textContent = location.name;
+            const topLocation = document.createElement('h4');
             topLocation.textContent = location.city;
-            const topRating = document.createElement('h3');
+            const topRating = document.createElement('h5');
             topRating.id = 'top-rating';
             loadAvgRating(location, topRating);
             loadReviews(rightTopContainer, location);
             leftTopContainer.append(topImage)
-            rightTopContainer.append(topLocation, topRating)
+            rightTopContainer.append(topLocationName, topLocation, topRating)
             renderReviewForm(rightTopContainer, location);
             topContainer.append(leftTopContainer, rightTopContainer)
             mainContainer.insertBefore(topContainer, mainContainer.firstChild)
@@ -59,22 +65,24 @@ function loadReviews(container, location) {
     fetch(`${url}/locations/${location.id}`)
     .then(resp => resp.json())
     .then(location => {
-        const h5 = document.createElement('h5');
-        h5.id = 'reviews-header';
-        h5.textContent = 'Reviews:';
-        container.append(h5);
+        const h4 = document.createElement('h4');
+        h4.id = 'reviews-header';
+        h4.textContent = 'Reviews:';
+        container.append(h4);
         location.reviews.forEach(review => {
-            renderReview(h5, review);
+            renderReview(h4, review);
         })
     })
 }
 
 function renderReview(header, review) {
-    const rating = document.createElement('div');
-    const comment = document.createElement('div');
+    const reviewContainer = document.createElement('div');
+    const rating = document.createElement('h5');
+    const comment = document.createElement('h5');
     rating.textContent = `${review.rating}/10`;
     comment.textContent = `"${review.content}"`;
-    header.append(rating, comment);
+    reviewContainer.append(rating, comment);
+    header.append(reviewContainer);
 }
 
 function loadAvgRating(location, locationRating) {
@@ -119,7 +127,6 @@ function renderReviewForm(container, location) {
             rating: parseInt(rating.value),
             content: comment.value
         }
-        console.log(newReview)
         fetch(`${url}/reviews`, {
             method: 'POST',
             headers: {
@@ -143,3 +150,30 @@ function renderReviewForm(container, location) {
     form.append(rating, comment, submit);
     container.append(form);
 }
+
+const addLocationForm = document.querySelector('#add-location-form');
+
+addLocationForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.querySelector('#name-input').value;
+    const city = document.querySelector('#city-input').value;
+    const img = document.querySelector('#img-input').value;
+
+    const newLocation = {
+        name,
+        city,
+        img
+    }
+
+    fetch(`${url}/locations`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(newLocation)
+    }).then(resp => resp.json())
+    .then(location => renderImages([location]))
+
+    addLocationForm.reset();
+})
