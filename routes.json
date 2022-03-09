@@ -1,4 +1,4 @@
 {
-    "/locations/:id": "/locations/:id?_embed=comments"
+    "/locations/:id": "/locations/:id?_embed=reviews"
 }
   
