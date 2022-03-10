@@ -1,8 +1,13 @@
 const url = 'http://localhost:3000'
 
+let dbLocations
+
 fetch (url + '/locations') 
     .then((response) => response.json())
-    .then((data) => renderImages(data))
+    .then((data) => {
+        renderImages(data);
+        dbLocations = data;
+    })
 
 const mainContainer = document.querySelector('#main-container')
 
@@ -25,55 +30,85 @@ function renderImages(locations) {
         imageContainer.append(locationImage, imageName, imageLocation, locationRating);
         mainContainer.append(imageContainer);
 
-        imageContainer.addEventListener('click', function(e){
-            const removeFromContainer = document.querySelector('#top-container');
-            if(removeFromContainer !== null) {
-                while(removeFromContainer.firstChild) {
-                    removeFromContainer.removeChild(removeFromContainer.firstChild);
-                }
-            }
-            window.scrollTo(top);
-            const topContainer = document.createElement('div');
-            topContainer.id = 'top-container';
-            const leftTopContainer = document.createElement('div');
-            leftTopContainer.id = 'left-top-container';
-            const rightTopContainer = document.createElement('div');
-            rightTopContainer.id = 'right-top-container';
-            const topImage = document.createElement('img');
-            topImage.id = 'top-container-image';
-            topImage.src = location.img;
-            const topLocationName = document.createElement('h2')
-            topLocationName.textContent = location.name;
-            const topLocation = document.createElement('h4');
-            topLocation.textContent = location.city;
-            const topRating = document.createElement('h5');
-            topRating.id = 'top-rating';
-            loadAvgRating(location, topRating);
-            loadReviews(rightTopContainer, location);
-            leftTopContainer.append(topImage)
-            rightTopContainer.append(topLocationName, topLocation, topRating)
-            renderReviewForm(rightTopContainer, location);
-            topContainer.append(leftTopContainer, rightTopContainer)
-            mainContainer.insertBefore(topContainer, mainContainer.firstChild)
+        imageContainer.addEventListener('click', function (e) {
+            renderTopImage(e, location)
         })
     })
-
 }
 
 
-function loadReviews(container, location) {
-    fetch(`${url}/locations/${location.id}`)
-    .then(resp => resp.json())
-    .then(location => {
+
+function renderTopImage (e, location) {
+    const removeFromContainer = document.querySelector('#top-container');
+    if(removeFromContainer !== null) {
+        while(removeFromContainer.firstChild) {
+            removeFromContainer.removeChild(removeFromContainer.firstChild);
+        }
+    }
+    window.scrollTo(top);
+    const topContainer = document.createElement('div');
+    topContainer.id = 'top-container';
+    const leftTopContainer = document.createElement('div');
+    leftTopContainer.id = 'left-top-container';
+    const rightTopContainer = document.createElement('div');
+    rightTopContainer.id = 'right-top-container';
+    const topImage = document.createElement('img');
+    topImage.id = 'top-container-image';
+    topImage.src = location.img;
+    const topLocationName = document.createElement('h2')
+    topLocationName.textContent = location.name;
+    const topLocation = document.createElement('h4');
+    topLocation.textContent = location.city;
+    const topRating = document.createElement('h5');
+    topRating.id = 'top-rating';
+    
+    loadAvgRating(location, topRating);
+    loadReviews(rightTopContainer, location);
+    rightTopContainer.append()
+    leftTopContainer.append(topImage)
+    rightTopContainer.append(topLocationName, topLocation, topRating)
+    renderReviewForm(rightTopContainer, location);
+    topContainer.append(leftTopContainer, rightTopContainer)
+    mainContainer.insertBefore(topContainer, mainContainer.firstChild)
+}
+
+
+async function loadReviews(container, location) {
+    const resp = await fetch(`${url}/locations/${location.id}`)
+    if (resp.ok) {
+        const location = await resp.json();
         const h4 = document.createElement('h4');
         h4.id = 'reviews-header';
         h4.textContent = 'Reviews:';
         container.append(h4);
         location.reviews.forEach(review => {
-            renderReview(h4, review);
+        renderReview(h4, review);
         })
-    })
+        const deleteContainer = document.createElement('form')
+        const deleteButton = document.createElement('button');
+        deleteButton.id = 'delete-location-button'
+        deleteButton.textContent = 'Delete Location';
+        deleteContainer.addEventListener ('submit', e => deleteLocation(e, location))
+        deleteContainer.append(deleteButton);
+        container.append(deleteContainer);
+    }
 }
+
+async function deleteLocation(e, location) {
+    e.preventDefault();
+    const resp = await fetch(url + `/locations/${location.id}`, {
+        method: 'DELETE'
+    })
+    dbLocations = dbLocations.filter(function(dbLocation){
+        return dbLocation.id !== location.id;
+        
+    })
+    while(mainContainer.firstChild) {
+        mainContainer.removeChild(mainContainer.firstChild);
+    }
+    renderImages(dbLocations);
+}
+
 
 function renderReview(header, review) {
     const reviewContainer = document.createElement('div');
@@ -110,14 +145,16 @@ function renderReviewForm(container, location) {
     const rating = document.createElement('input');
     rating.id = 'rating-input';
     rating.type = 'number';
+    rating.placeholder = 'Rating'
     rating.min = 0;
     rating.max = 10;
 
-    const comment = document.createElement('input');
+    const comment = document.createElement('textarea');
     comment.id = 'comment-input';
-    comment.placeholder = 'Enter a review!' 
+    comment.placeholder = 'Enter a review!';
 
     const submit = document.createElement('input');
+    submit.id = 'submit-review-button'
     submit.type = 'submit';
 
     form.addEventListener('submit', function(e) {
@@ -173,7 +210,11 @@ addLocationForm.addEventListener('submit', function(e){
         },
         body: JSON.stringify(newLocation)
     }).then(resp => resp.json())
-    .then(location => renderImages([location]))
-
+    .then(location => {
+        renderImages([location])
+        renderTopImage(null, location)
+        dbLocations = [...dbLocations, location]
+    })
+    
     addLocationForm.reset();
 })
