@@ -55,10 +55,14 @@ function renderTopImage (e, location) {
     const topImage = document.createElement('img');
     topImage.id = 'top-container-image';
     topImage.src = location.img;
-    const topLocationName = document.createElement('h2')
+    const topLocationName = document.createElement('h2');
+    topLocationName.id = 'top-location-name';
     topLocationName.textContent = location.name;
+    topLocationName.contentEditable = false;
     const topLocation = document.createElement('h4');
+    topLocation.id = 'top-location-city';
     topLocation.textContent = location.city;
+    topLocation.contentEditable = false;
     const topRating = document.createElement('h5');
     topRating.id = 'top-rating';
     
@@ -84,15 +88,41 @@ async function loadReviews(container, location) {
         location.reviews.forEach(review => {
         renderReview(h4, review);
         })
+        const editContainer = document.createElement('form');
+        editContainer.id = 'edit-container';
         const deleteContainer = document.createElement('form');
-        deleteContainer.id = 'delete-container'
+        deleteContainer.id = 'delete-container';
+        const editLocationButton = document.createElement('button');
+        editLocationButton.id = 'edit-location-button';
+        editLocationButton.textContent = "Edit Location";
         const deleteButton = document.createElement('button');
-        deleteButton.id = 'delete-location-button'
+        deleteButton.id = 'delete-location-button';
         deleteButton.textContent = 'Delete Location';
-        deleteContainer.addEventListener ('submit', e => deleteLocation(e, location))
+        deleteContainer.addEventListener ('submit', e => deleteLocation(e, location));
+        editContainer.addEventListener('submit', e => editLocation(e, location));
+        editContainer.append(editLocationButton);
         deleteContainer.append(deleteButton);
+        container.append(editContainer);
         container.append(deleteContainer);
     }
+}
+
+async function editLocation(e, location) {
+    e.preventDefault();
+    console.log('first click');
+    const topLocationName = document.querySelector('#top-location-name');
+    const topLocationCity = document.querySelector('#top-location-city');
+    if(topLocationName.contentEditable !== true){
+        topLocationName.contentEditable = true;
+        topLocationCity.contentEditable = true;
+        topLocationName.id = 'top-location-name-edit';
+        topLocationCity.id = 'top-location-city-edit';
+    }
+}
+
+function saveEdits(e, location) {
+    e.preventDefault();
+    console.log('second click');
 }
 
 async function deleteLocation(e, location) {

@@ -17,6 +17,11 @@ h1 {
     /* text-shadow: 2px 2px 8px black; */
 }
 
+#add-location-instruction {
+    display: inline;
+    color: white;
+}
+
 #add-location-form {
     text-align: center;
     margin-bottom: 20px;
@@ -141,6 +146,27 @@ h2, h4, h5 {
 
 #delete-container {
     display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#edit-location-button {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#edit-container {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#top-location-name-edit, #top-location-city-edit {
+    background-color: white;
+    border-style: solid;
+    color: black;
+    width: max-content;
     margin-right: auto;
     margin-left: auto;
 }
