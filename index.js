@@ -84,7 +84,8 @@ async function loadReviews(container, location) {
         location.reviews.forEach(review => {
         renderReview(h4, review);
         })
-        const deleteContainer = document.createElement('form')
+        const deleteContainer = document.createElement('form');
+        deleteContainer.id = 'delete-container'
         const deleteButton = document.createElement('button');
         deleteButton.id = 'delete-location-button'
         deleteButton.textContent = 'Delete Location';
