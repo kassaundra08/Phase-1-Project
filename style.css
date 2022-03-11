@@ -1,6 +1,4 @@
 body {
-    /* background-image: url(https://burst.shopifycdn.com/photos/person-stands-by-tall-orange-wall-and-looks-up.jpg?width=925&format=pjpg&exif=1&iptc=1);
-    background-size: cover; */
     background: rgb(5,51,106);
     background: radial-gradient(circle, rgba(5,51,106,1) 21%, rgba(3,52,10,1) 80%);
 }
@@ -14,7 +12,6 @@ h1 {
 
 * {
     font-family:Georgia, 'Times New Roman', Times, serif;
-    /* text-shadow: 2px 2px 8px black; */
 }
 
 #add-location-instruction {

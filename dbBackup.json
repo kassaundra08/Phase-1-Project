@@ -61,6 +61,30 @@
         "locationId": 2,
         "rating": 9,
         "content": "The Roman Colosseum is a staple of Ancient History!"
+      },
+      {
+        "id": 4,
+        "locationId": 4,
+        "rating": 7,
+        "content": "A great example of Peru's rich history!"
+      },
+      {
+        "id": 5,
+        "locationId": 5,
+        "rating": 8,
+        "content": "The biggest triangle I've ever seen!"
+      },
+      {
+        "id": 6,
+        "locationId": 6,
+        "rating": 10,
+        "content": "Such beautiful architecture!"
+      },
+      {
+        "id": 7,
+        "locationId": 7,
+        "rating": 9,
+        "content": "I wish I had more time to see it all!"
       }
     ]
-}
+  }
