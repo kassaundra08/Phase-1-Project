@@ -2,15 +2,19 @@ const url = 'http://localhost:3000'
 
 let dbLocations
 
-fetch (url + '/locations') 
+const body = document.querySelector('body')
+const mainContainer = document.querySelector('#main-container')
+
+const init = () => {
+    fetch (url + '/locations') 
     .then((response) => response.json())
     .then((data) => {
         renderImages(data);
         dbLocations = data;
     })
+};
 
-const body = document.querySelector('body')
-const mainContainer = document.querySelector('#main-container')
+init()
 
 function renderImages(locations) {
     locations.forEach(location => {
