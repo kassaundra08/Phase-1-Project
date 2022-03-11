@@ -9,6 +9,7 @@ fetch (url + '/locations')
         dbLocations = data;
     })
 
+const body = document.querySelector('body')
 const mainContainer = document.querySelector('#main-container')
 
 function renderImages(locations) {
@@ -44,36 +45,61 @@ function renderTopImage (e, location) {
         while(removeFromContainer.firstChild) {
             removeFromContainer.removeChild(removeFromContainer.firstChild);
         }
+        window.scrollTo(top);
+        const leftTopContainer = document.createElement('div');
+        leftTopContainer.id = 'left-top-container';
+        const rightTopContainer = document.createElement('div');
+        rightTopContainer.id = 'right-top-container';
+        const topImage = document.createElement('img');
+        topImage.id = 'top-container-image';
+        topImage.src = location.img;
+        const topLocationName = document.createElement('h2');
+        topLocationName.id = 'top-location-name';
+        topLocationName.textContent = location.name;
+        topLocationName.contentEditable = false;
+        const topLocation = document.createElement('h4');
+        topLocation.id = 'top-location-city';
+        topLocation.textContent = location.city;
+        topLocation.contentEditable = false;
+        const topRating = document.createElement('h5');
+        topRating.id = 'top-rating';
+        loadAvgRating(location, topRating);
+        loadReviews(rightTopContainer, location);
+        rightTopContainer.append()
+        leftTopContainer.append(topImage)
+        rightTopContainer.append(topLocationName, topLocation, topRating)
+        renderReviewForm(rightTopContainer, location);
+        removeFromContainer.append(leftTopContainer, rightTopContainer)
+    } else {
+        window.scrollTo(top);
+        const topContainer = document.createElement('div');
+        topContainer.id = 'top-container';
+        const leftTopContainer = document.createElement('div');
+        leftTopContainer.id = 'left-top-container';
+        const rightTopContainer = document.createElement('div');
+        rightTopContainer.id = 'right-top-container';
+        const topImage = document.createElement('img');
+        topImage.id = 'top-container-image';
+        topImage.src = location.img;
+        const topLocationName = document.createElement('h2');
+        topLocationName.id = 'top-location-name';
+        topLocationName.textContent = location.name;
+        topLocationName.contentEditable = false;
+        const topLocation = document.createElement('h4');
+        topLocation.id = 'top-location-city';
+        topLocation.textContent = location.city;
+        topLocation.contentEditable = false;
+        const topRating = document.createElement('h5');
+        topRating.id = 'top-rating';
+        loadAvgRating(location, topRating);
+        loadReviews(rightTopContainer, location);
+        rightTopContainer.append()
+        leftTopContainer.append(topImage)
+        rightTopContainer.append(topLocationName, topLocation, topRating)
+        renderReviewForm(rightTopContainer, location);
+        topContainer.append(leftTopContainer, rightTopContainer)
+        body.insertBefore(topContainer, mainContainer)
     }
-    window.scrollTo(top);
-    const topContainer = document.createElement('div');
-    topContainer.id = 'top-container';
-    const leftTopContainer = document.createElement('div');
-    leftTopContainer.id = 'left-top-container';
-    const rightTopContainer = document.createElement('div');
-    rightTopContainer.id = 'right-top-container';
-    const topImage = document.createElement('img');
-    topImage.id = 'top-container-image';
-    topImage.src = location.img;
-    const topLocationName = document.createElement('h2');
-    topLocationName.id = 'top-location-name';
-    topLocationName.textContent = location.name;
-    topLocationName.contentEditable = false;
-    const topLocation = document.createElement('h4');
-    topLocation.id = 'top-location-city';
-    topLocation.textContent = location.city;
-    topLocation.contentEditable = false;
-    const topRating = document.createElement('h5');
-    topRating.id = 'top-rating';
-    
-    loadAvgRating(location, topRating);
-    loadReviews(rightTopContainer, location);
-    rightTopContainer.append()
-    leftTopContainer.append(topImage)
-    rightTopContainer.append(topLocationName, topLocation, topRating)
-    renderReviewForm(rightTopContainer, location);
-    topContainer.append(leftTopContainer, rightTopContainer)
-    mainContainer.insertBefore(topContainer, mainContainer.firstChild)
 }
 
 
@@ -92,9 +118,15 @@ async function loadReviews(container, location) {
         editContainer.id = 'edit-container';
         const deleteContainer = document.createElement('form');
         deleteContainer.id = 'delete-container';
+        const saveContainer = document.createElement('form');
+        saveContainer.id = 'save-container';
+        saveContainer.style.display = 'none';
         const editLocationButton = document.createElement('button');
         editLocationButton.id = 'edit-location-button';
         editLocationButton.textContent = "Edit Location";
+        const saveButton = document.createElement('button');
+        saveButton.id = 'save-location-button';
+        saveButton.textContent = 'Save Changes';
         const deleteButton = document.createElement('button');
         deleteButton.id = 'delete-location-button';
         deleteButton.textContent = 'Delete Location';
@@ -102,28 +134,62 @@ async function loadReviews(container, location) {
         editContainer.addEventListener('submit', e => editLocation(e, location));
         editContainer.append(editLocationButton);
         deleteContainer.append(deleteButton);
+        saveContainer.append(saveButton);
         container.append(editContainer);
+        container.append(saveContainer);
         container.append(deleteContainer);
     }
 }
 
 async function editLocation(e, location) {
     e.preventDefault();
-    console.log('first click');
     const topLocationName = document.querySelector('#top-location-name');
     const topLocationCity = document.querySelector('#top-location-city');
     if(topLocationName.contentEditable !== true){
+        topLocationName.id = 'top-location-name-edit';
+        topLocationCity.id = 'top-location-city-edit';        
         topLocationName.contentEditable = true;
         topLocationCity.contentEditable = true;
-        topLocationName.id = 'top-location-name-edit';
-        topLocationCity.id = 'top-location-city-edit';
+        document.querySelector('#edit-container').style.display = 'none';
+        const saveContainer = document.querySelector('#save-container')
+        saveContainer.style.display = 'block';
+        saveContainer.addEventListener('submit', e => saveEdits(e, location));
     }
 }
 
-function saveEdits(e, location) {
+async function saveEdits(e, location) {
     e.preventDefault();
-    console.log('second click');
-}
+    const nameElement = document.querySelector('#top-location-name-edit');
+    const cityElement = document.querySelector('#top-location-city-edit');
+    const name = nameElement.textContent;
+    const city = cityElement.textContent;
+    const resp = await fetch(url + `/locations/${location.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({name, city})
+    })
+    if(resp.ok) {
+        nameElement.id = 'top-location-name';
+        cityElement.id = 'top-location-city';        
+        nameElement.contentEditable = false;
+        cityElement.contentEditable = false;
+        document.querySelector('#save-container').style.display = 'none';
+        document.querySelector('#edit-container').style.display = 'block';
+        dbLocations.forEach(dbLocation => {
+            if(dbLocation.id === location.id) {
+                dbLocation.name = name;
+                dbLocation.city = city;
+            }
+        })
+        while(mainContainer.firstChild) {
+            mainContainer.removeChild(mainContainer.firstChild);
+        }
+        renderImages(dbLocations);
+    }
+;}
 
 async function deleteLocation(e, location) {
     e.preventDefault();
@@ -134,6 +200,7 @@ async function deleteLocation(e, location) {
         return dbLocation.id !== location.id;
         
     })
+    document.querySelector('#top-container').remove();    
     while(mainContainer.firstChild) {
         mainContainer.removeChild(mainContainer.firstChild);
     }

@@ -162,6 +162,12 @@ h2, h4, h5 {
     margin-left: auto;
 }
 
+#save-location-button {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 #top-location-name-edit, #top-location-city-edit {
     background-color: white;
     border-style: solid;
