@@ -40,65 +40,41 @@ function renderImages(locations) {
 
 
 function renderTopImage (e, location) {
-    const removeFromContainer = document.querySelector('#top-container');
+    window.scrollTo(top);
+    const removeFromContainer = document.querySelector('#top-container');    
+    const leftTopContainer = document.createElement('div');
+    leftTopContainer.id = 'left-top-container';
+    const rightTopContainer = document.createElement('div');
+    rightTopContainer.id = 'right-top-container';
+    const topImage = document.createElement('img');
+    topImage.id = 'top-container-image';
+    topImage.src = location.img;
+    const topLocationName = document.createElement('h2');
+    topLocationName.id = 'top-location-name';
+    topLocationName.textContent = location.name;
+    topLocationName.contentEditable = false;
+    const topLocation = document.createElement('h4');
+    topLocation.id = 'top-location-city';
+    topLocation.textContent = location.city;
+    topLocation.contentEditable = false;
+    const topRating = document.createElement('h5');
+    topRating.id = 'top-rating';
+    loadAvgRating(location, topRating);
+    loadReviews(rightTopContainer, location);
+    rightTopContainer.append()
+    leftTopContainer.append(topImage)
+    rightTopContainer.append(topLocationName, topLocation, topRating)
+    renderReviewForm(rightTopContainer, location);
     if(removeFromContainer !== null) {
         while(removeFromContainer.firstChild) {
             removeFromContainer.removeChild(removeFromContainer.firstChild);
         }
-        window.scrollTo(top);
-        const leftTopContainer = document.createElement('div');
-        leftTopContainer.id = 'left-top-container';
-        const rightTopContainer = document.createElement('div');
-        rightTopContainer.id = 'right-top-container';
-        const topImage = document.createElement('img');
-        topImage.id = 'top-container-image';
-        topImage.src = location.img;
-        const topLocationName = document.createElement('h2');
-        topLocationName.id = 'top-location-name';
-        topLocationName.textContent = location.name;
-        topLocationName.contentEditable = false;
-        const topLocation = document.createElement('h4');
-        topLocation.id = 'top-location-city';
-        topLocation.textContent = location.city;
-        topLocation.contentEditable = false;
-        const topRating = document.createElement('h5');
-        topRating.id = 'top-rating';
-        loadAvgRating(location, topRating);
-        loadReviews(rightTopContainer, location);
-        rightTopContainer.append()
-        leftTopContainer.append(topImage)
-        rightTopContainer.append(topLocationName, topLocation, topRating)
-        renderReviewForm(rightTopContainer, location);
         removeFromContainer.append(leftTopContainer, rightTopContainer)
     } else {
-        window.scrollTo(top);
         const topContainer = document.createElement('div');
         topContainer.id = 'top-container';
-        const leftTopContainer = document.createElement('div');
-        leftTopContainer.id = 'left-top-container';
-        const rightTopContainer = document.createElement('div');
-        rightTopContainer.id = 'right-top-container';
-        const topImage = document.createElement('img');
-        topImage.id = 'top-container-image';
-        topImage.src = location.img;
-        const topLocationName = document.createElement('h2');
-        topLocationName.id = 'top-location-name';
-        topLocationName.textContent = location.name;
-        topLocationName.contentEditable = false;
-        const topLocation = document.createElement('h4');
-        topLocation.id = 'top-location-city';
-        topLocation.textContent = location.city;
-        topLocation.contentEditable = false;
-        const topRating = document.createElement('h5');
-        topRating.id = 'top-rating';
-        loadAvgRating(location, topRating);
-        loadReviews(rightTopContainer, location);
-        rightTopContainer.append()
-        leftTopContainer.append(topImage)
-        rightTopContainer.append(topLocationName, topLocation, topRating)
-        renderReviewForm(rightTopContainer, location);
-        topContainer.append(leftTopContainer, rightTopContainer)
-        body.insertBefore(topContainer, mainContainer)
+        topContainer.append(leftTopContainer, rightTopContainer);
+        body.insertBefore(topContainer, mainContainer);
     }
 }
 
