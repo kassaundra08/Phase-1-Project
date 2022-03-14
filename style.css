@@ -17,7 +17,7 @@ h2, h4, h5 {
     color: white;
     padding: 0px;
     margin: 0px;
-    text-shadow: 2px 2px 7px black;
+    text-shadow: 5px 5px 7px black;
 }
 
 button {
@@ -72,7 +72,8 @@ input {
     padding-right: 50px;
     padding-left: 50px;
     display: inline-block;
-    background-color:rgb(0, 0, 0, 0.5);
+    background-color: rgb(0, 0, 0, 0.5);
+    box-shadow: 0 -5px 30px 30px rgb(0, 0, 0, 0.5);
 }
 
 #add-location-instruction {
