@@ -13,6 +13,12 @@
       "img": "https://i.imgur.com/cc48HVa.jpeg"
     },
     {
+      "id": 3,
+      "name": "Chichen Itza",
+      "city": "Yucatan, Mexico",
+      "img": "https://i.imgur.com/j2lEflL.jpeg"
+    },
+    {
       "id": 4,
       "name": "Machu Picchu",
       "city": "Machu Picchu, Peru",
@@ -35,12 +41,6 @@
       "name": "Great Wall of China",
       "city": "China",
       "img": "https://i.imgur.com/9xYbyPs.jpeg"
-    },
-    {
-      "name": "Times Square",
-      "city": "NYC, NY",
-      "img": "https://i.imgur.com/e61VG5H.jpeg",
-      "id": 8
     }
   ],
   "reviews": [
@@ -85,12 +85,6 @@
       "locationId": 7,
       "rating": 9,
       "content": "I wish I had more time to see it all!"
-    },
-    {
-      "locationId": 8,
-      "rating": 9,
-      "content": "What a beautiful city!",
-      "id": 8
     }
   ]
 }

@@ -1,39 +1,46 @@
 body {
-    background: rgb(5,51,106);
-    background: radial-gradient(circle, rgba(5,51,106,1) 21%, rgba(3,52,10,1) 80%);
+    background-image: url(https://cdn.stocksnap.io/img-thumbs/960w/green-leaf_XT0Z8BXA9A.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+    margin: 0px;
 }
 
 h1 {
     text-align: center;
     color: white;
-    justify-content: center;
-    align-items: center;
+    font-size: 40px;
+}
+
+h2, h4, h5 {
+    text-align: center;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    text-shadow: 2px 2px 7px black;
+}
+
+button {
+    background-color: rgba(73, 73, 73, 0.8);
+    color: white;
+    border: 0px solid white;
+    border-radius: 9px;
+    padding: 5px;
+    margin: 5px;
+}
+
+input {
+    background-color: rgba(73, 73, 73, 0.8);
+    color: white;
+    border: 0px solid white;
+    border-radius: 9px;
+    padding: 5px;
+    margin: 1px;
 }
 
 * {
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-
-#add-location-instruction {
-    display: inline;
-    color: white;
-}
-
-#add-location-form {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#image-container-image {
-    object-fit: cover;
-    width:350px;
-    height:350px;
-    float: left;
-    padding: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
 }
 
 .location-container:hover {
@@ -51,15 +58,43 @@ h1 {
     text-decoration: underline;
 }
 
-h2, h4, h5 {
-    text-align: center;
-    color: white;
-    padding: 0px;
-    margin: 0px;
-}
-
 .location-rating {
     margin-bottom: 20px;
+}
+
+#header-content {
+    text-align: center;
+}
+
+#header-container {
+    margin: 20px;
+    border-radius: 25px;
+    padding-right: 50px;
+    padding-left: 50px;
+    display: inline-block;
+    background-color:rgb(0, 0, 0, 0.5);
+}
+
+#add-location-instruction {
+    display: inline;
+    color: white;
+}
+
+#add-location-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#image-container-image {
+    object-fit: cover;
+    width:350px;
+    height:350px;
+    float: left;
+    margin: 5px;
+    border-radius: 50%;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 1px;
 }
 
 #main-container {
@@ -70,30 +105,37 @@ h2, h4, h5 {
 
 #top-container-image {
     object-fit: cover;
-    width:600px;
-    height:600px;
-    box-shadow: 0 0 0 1px white;
-    padding: 5px;
+    float: right;
+    width:700px;
+    height:550px;
+    margin: 5px;
+    outline-style: solid;
+    outline-color: white;
+    outline-width: 1px;
+    border-radius: 25px;
 }
 
 #left-top-container {
     float: left;
     width: 50%;
-    text-align: right;
+    text-align: center;
 }
 
 #right-top-container {
     float: left;
     width: 50%;
+    text-align: center;
 }
 
 #top-container {
     width: 100%;
-    content: '';
     display: table;
     clear: both;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+    margin-right: -10px;
+    background: rgb(0, 0, 0, 0.4);
 }
 
 #review-form {
@@ -115,6 +157,7 @@ h2, h4, h5 {
     height: 100px;
     overflow-y: scroll;
     white-space: pre-wrap;
+    background: rgba(255, 255, 255, 0.9);
 }
 
 #submit-review-button {
